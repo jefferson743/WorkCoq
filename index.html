@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkCoq - Empregos em Coqueiral e Região</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="components/job-card.js"></script>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero -->
+        <section class="bg-blue-600 text-white rounded-xl p-8 mb-12">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl font-bold mb-4">Encontre seu próximo emprego em Coqueiral</h1>
+                <p class="text-xl mb-8">Conectamos talentos locais às melhores oportunidades da região</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="candidato.html" class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg hover:bg-blue-50">Sou Candidato</a>
+                    <a href="empresa.html" class="bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-800">Sou Empresa</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vagas em Destaque -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Vagas em destaque</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <custom-job-card title="Auxiliar Administrativo" company="Mercado Coqueiral" location="Coqueiral, MG" salary="R$ 1.500 - R$ 1.800" type="CLT"></custom-job-card>
+                <custom-job-card title="Técnico em Agropecuária" company="Fazenda São José" location="Coqueiral, MG" salary="R$ 2.200 - R$ 2.600" type="CLT"></custom-job-card>
+                <custom-job-card title="Vendedor(a)" company="Loja de Móveis Excelência" location="Coqueiral, MG" salary="R$ 1.200 + comissão" type="CLT"></custom-job-card>
+            </div>
+            <div class="text-center mt-8">
+                <a href="vagas.html" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center justify-center">
+                    Ver todas as vagas <i data-feather="arrow-right" class="ml-2"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Como Funciona -->
+        <section id="como-funciona" class="mb-12">
+            <h2 class="text-2xl font-bold mb-8 text-gray-800">Como funciona</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="user" class="text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Para Candidatos</h3>
+                    <p class="text-gray-600">Cadastre seu currículo e encontre as melhores oportunidades na região de Coqueiral.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="briefcase" class="text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Para Empresas</h3>
+                    <p class="text-gray-600">Cadastre suas vagas e encontre os melhores talentos locais para sua empresa.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="book" class="text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Desenvolvimento</h3>
+                    <p class="text-gray-600">Acesse conteúdos exclusivos para desenvolvimento profissional e pessoal.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Depoimentos -->
+        <section class="mb-12 bg-blue-50 rounded-xl p-8">
+            <h2 class="text-2xl font-bold mb-8 text-center text-gray-800">Depoimentos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gray-200 border-2 border-dashed rounded-full mr-4"></div>
+                        <div>
+                            <h4 class="font-semibold">Joana Silva</h4>
+                            <p class="text-sm text-gray-500">Assistente Administrativa</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Encontrei meu emprego atual pelo WorkCoq em menos de uma semana!"</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-gray-200 border-2 border-dashed rounded-full mr-4"></div>
+                        <div>
+                            <h4 class="font-semibold">Carlos Mendes</h4>
+                            <p class="text-sm text-gray-500">Proprietário - Mercado Coqueiral</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Contratamos 3 funcionários pelo WorkCoq este ano. Excelente!"</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>

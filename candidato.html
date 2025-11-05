@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidato - WorkCoq</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="components/navbar.js"></script>
+<script src="components/footer.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input, select, textarea');
+        
+        function validateField(field) {
+            const value = field.value.trim();
+            let valid = true;
+            let error = '';
+
+            // Validações específicas
+            if (field.type === 'email' && value && !/^\S+@\S+\.\S+$/.test(value)) {
+                error = 'E-mail inválido';
+                valid = false;
+            }
+            if (field.id.includes('cpf') && value && !/^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(value)) {
+                error = 'CPF inválido';
+                valid = false;
+            }
+            if (field.required && !value) {
+                error = 'Campo obrigatório';
+                valid = false;
+            }
+
+            // Feedback visual
+            const wrapper = field.closest('div');
+            const errorEl = wrapper.querySelector('.error');
+            if (errorEl) errorEl.remove();
+
+            if (!valid) {
+                field.classList.add('border-red-500');
+                wrapper.insertAdjacentHTML('beforeend', `<p class="error text-red-500 text-xs mt-1">${error}</p>`);
+            } else {
+                field.classList.remove('border-red-500');
+            }
+
+            return valid;
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => validateField(input));
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let allValid = true;
+            inputs.forEach(input => {
+                if (!validateField(input)) allValid = false;
+            });
+
+            if (allValid) {
+                alert('Currículo salvo com sucesso!');
+                // Aqui você enviaria para o backend
+            }
+        });
+    });
+</script>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">Área do Candidato</h1>
+                <p class="text-gray-600 max-w-2xl mx-auto">Cadastre seu currículo e encontre as melhores oportunidades de emprego em Coqueiral e região.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Meu Perfil</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Nome Completo</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">CPF</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Data de Nascimento</label>
+                        <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Gênero</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option>Masculino</option>
+                            <option>Feminino</option>
+                            <option>Outro</option>
+                            <option>Prefiro não informar</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">E-mail</label>
+                        <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Telefone</label>
+                        <input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Endereço</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <label class="block text-gray-700 mb-2">CEP</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-700 mb-2">Endereço</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Número</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Complemento</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Bairro</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Cidade</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Estado</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option>MG</option><option>SP</option><option>RJ</option><option>Outro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Experiência Profissional</h2>
+                <div class="space-y-6 mb-8">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label class="block text-gray-700 mb-2">Empresa</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                            <div><label class="block text-gray-700 mb-2">Cargo</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                            <div><label class="block text-gray-700 mb-2">Data de Início</label><input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                            <div><label class="block text-gray-700 mb-2">Data de Término</label><input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                            <div class="md:col-span-2"><label class="block text-gray-700 mb-2">Principais Atividades</label><textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" rows="3"></textarea></div>
+                        </div>
+                    </div>
+                    <button class="text-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-2"></i> Adicionar outra experiência</button>
+                </div>
+
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Formação Acadêmica</h2>
+                <div class="space-y-6 mb-8">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div><label class="block text-gray-700 mb-2">Instituição</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                            <div><label class="block text-gray-700 mb-2">Curso</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                            <div><label class="block text-gray-700 mb-2">Nível</label>
+                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <option>Ensino Médio</option><option>Técnico</option><option>Graduação</option><option>Pós-graduação</option><option>Mestrado</option><option>Doutorado</option>
+                                </select>
+                            </div>
+                            <div><label class="block text-gray-700 mb-2">Situação</label>
+                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    <option>Completo</option><option>Incompleto</option><option>Cursando</option>
+                                </select>
+                            </div>
+                            <div><label class="block text-gray-700 mb-2">Ano de Conclusão</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                        </div>
+                    </div>
+                    <button class="text-blue-600 flex items-center"><i data-feather="plus" class="w-4 h-4 mr-2"></i> Adicionar outra formação</button>
+                </div>
+
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Habilidades</h2>
+                <div class="mb-8">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+                            Atendimento ao Cliente
+                            <button class="ml-1 text-blue-600 hover:text-blue-800"><i data-feather="x" class="w-3 h-3"></i></button>
+                        </span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+                            Pacote Office
+                            <button class="ml-1 text-blue-600 hover:text-blue-800"><i data-feather="x" class="w-3 h-3"></i></button>
+                        </span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm flex items-center">
+                            Trabalho em Equipe
+                            <button class="ml-1 text-blue-600 hover:text-blue-800"><i data-feather="x" class="w-3 h-3"></i></button>
+                        </span>
+                    </div>
+                    <div class="flex">
+                        <input type="text" placeholder="Adicione uma habilidade" class="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700"><i data-feather="plus" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <button class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Cancelar</button>
+                    <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Salvar Currículo</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>feather.replace();</script>
+</body>
+</html>

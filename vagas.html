@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todas as Vagas - WorkCoq</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="components/job-card.js"></script>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+
+    <main class="container mx-auto px-4 py-12">
+        <h1 class="text-3xl font-bold mb-8 text-gray-800">Todas as Vagas</h1>
+
+        <!-- FILTROS -->
+        <div class="bg-white p-6 rounded-xl shadow-sm mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
+                    <input type="text" id="filter-title" placeholder="Ex: Vendedor" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Contrato</label>
+                    <select id="filter-type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Todos</option>
+                        <option value="CLT">CLT</option>
+                        <option value="PJ">PJ</option>
+                        <option value="ESTAGIO">Estágio</option>
+                        <option value="FREELANCER">Freelancer</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Salário Mínimo</label>
+                    <input type="number" id="filter-salary" placeholder="R$" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="flex items-end">
+                    <button id="clear-filters" class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition">Limpar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LISTA DE VAGAS -->
+        <div id="job-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Vagas serão inseridas via JS -->
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <!-- Botão WhatsApp Flutuante -->
+    <a href="https://wa.me/5535999999999?text=Olá!%20Gostaria%20de%20anunciar%20uma%20vaga." 
+       class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600 transition z-40"
+       target="_blank">
+        <i data-feather="message-circle" class="w-8 h-8"></i>
+    </a>
+
+    <script>
+        // Dados das vagas
+        const jobs = [
+            { title: "Auxiliar de Limpeza", company: "Hotel Central", location: "Coqueiral, MG", salary: "R$ 1.400", type: "CLT" },
+            { title: "Motorista", company: "Transportadora MG", location: "Coqueiral, MG", salary: "R$ 2.000", type: "CLT" },
+            { title: "Estagiário de TI", company: "Prefeitura", location: "Coqueiral, MG", salary: "R$ 800", type: "ESTAGIO" },
+            { title: "Vendedor Externo", company: "Distribuidora", location: "Coqueiral, MG", salary: "R$ 1.800 + comissão", type: "PJ" },
+            { title: "Técnico em Agropecuária", company: "Fazenda São José", location: "Coqueiral, MG", salary: "R$ 2.600", type: "CLT" }
+        ];
+
+        const jobList = document.getElementById('job-list');
+        const filterTitle = document.getElementById('filter-title');
+        const filterType = document.getElementById('filter-type');
+        const filterSalary = document.getElementById('filter-salary');
+        const clearBtn = document.getElementById('clear-filters');
+
+        function renderJobs(filteredJobs) {
+            jobList.innerHTML = '';
+            filteredJobs.forEach(job => {
+                const card = document.createElement('custom-job-card');
+                card.setAttribute('title', job.title);
+                card.setAttribute('company', job.company);
+                card.setAttribute('location', job.location);
+                card.setAttribute('salary', job.salary);
+                card.setAttribute('type', job.type);
+                jobList.appendChild(card);
+            });
+            setTimeout(() => feather.replace(), 0);
+        }
+
+        function filterJobs() {
+            const title = filterTitle.value.toLowerCase();
+            const type = filterType.value;
+            const salary = parseFloat(filterSalary.value) || 0;
+
+            const filtered = jobs.filter(job => {
+                const matchesTitle = job.title.toLowerCase().includes(title);
+                const matchesType = !type || job.type === type;
+                const jobSalary = parseFloat(job.salary.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+                const matchesSalary = !salary || jobSalary >= salary;
+                return matchesTitle && matchesType && matchesSalary;
+            });
+
+            renderJobs(filtered);
+        }
+
+        // Eventos de filtro
+        filterTitle.addEventListener('input', filterJobs);
+        filterType.addEventListener('change', filterJobs);
+        filterSalary.addEventListener('input', filterJobs);
+        clearBtn.addEventListener('click', () => {
+            filterTitle.value = '';
+            filterType.value = '';
+            filterSalary.value = '';
+            renderJobs(jobs);
+        });
+
+        // Render inicial
+        renderJobs(jobs);
+    </script>
+    
+</body>
+</html>

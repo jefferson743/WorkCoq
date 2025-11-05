@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresa - WorkCoq</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+    if (!form) return;
+
+    const inputs = form.querySelectorAll('input');
+
+    function validateCNPJ(cnpj) {
+        cnpj = cnpj.replace(/\D/g, '');
+        if (cnpj.length !== 14) return false;
+        // Validação básica de CNPJ
+        let soma = 0;
+        let peso = 5;
+        for (let i = 0; i < 12; i++) {
+            soma += parseInt(cnpj[i]) * peso;
+            peso = peso === 2 ? 9 : peso - 1;
+        }
+        let digito = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+        if (digito !== parseInt(cnpj[12])) return false;
+        return true;
+    }
+
+    function validateField(field) {
+        const value = field.value.trim();
+        let valid = true;
+        let error = '';
+
+        if (field.type === 'email' && value && !/^\S+@\S+\.\S+$/.test(value)) {
+            error = 'E-mail inválido';
+            valid = false;
+        }
+        if (field.placeholder.includes('CNPJ') && value && !validateCNPJ(value)) {
+            error = 'CNPJ inválido';
+            valid = false;
+        }
+        if (field.required && !value) {
+            error = 'Campo obrigatório';
+            valid = false;
+        }
+
+        const wrapper = field.closest('div');
+        const errorEl = wrapper.querySelector('.error');
+        if (errorEl) errorEl.remove();
+
+        if (!valid) {
+            field.classList.add('border-red-500');
+            wrapper.insertAdjacentHTML('beforeend', `<p class="error text-red-500 text-xs mt-1">${error}</p>`);
+        } else {
+            field.classList.remove('border-red-500');
+        }
+
+        return valid;
+    }
+
+    inputs.forEach(input => {
+        input.addEventListener('blur', () => validateField(input));
+    });
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let allValid = true;
+        inputs.forEach(input => {
+            if (!validateField(input)) allValid = false;
+        });
+
+        if (allValid) {
+            alert('Empresa cadastrada com sucesso!');
+        }
+    });
+});
+</script>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">Área da Empresa</h1>
+                <p class="text-gray-600 max-w-2xl mx-auto">Cadastre sua empresa e publique vagas para atrair os melhores talentos de Coqueiral.</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Dados da Empresa</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div><label class="block text-gray-700 mb-2">Razão Social</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">CNPJ</label><input type="text" placeholder="00.000.000/0000-00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">Nome Fantasia</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">Responsável</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">E-mail Corporativo</label><input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">Telefone</label><input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                </div>
+
+                <h2 class="text-xl font-semibold mb-6 text-gray-800">Endereço</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div><label class="block text-gray-700 mb-2">CEP</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div class="md:col-span-2"><label class="block text-gray-700 mb-2">Endereço</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">Número</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">Complemento</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">Bairro</label><input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                    <div><label class="block text-gray-700 mb-2">Cidade</label><input type="text" value="Coqueiral" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></div>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <button class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">Cancelar</button>
+                    <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Cadastrar Empresa</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>feather.replace();</script>
+</body>
+</html>

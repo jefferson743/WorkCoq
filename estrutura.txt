@@ -1,0 +1,14 @@
+workcoq/
+├── index.html
+├── candidato.html
+├── empresa.html
+├── vagas.html
+├── vaga-detalhes.html
+├── login.html
+├── style.css
+├── script.js
+│
+└── components/
+    ├── navbar.js
+    ├── footer.js
+    └── job-card.js

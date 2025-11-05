@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Vaga - WorkCoq</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+</head>
+<body class="bg-gray-50">
+    <custom-navbar></custom-navbar>
+
+    <main class="container mx-auto px-4 py-12">
+        <div class="bg-white rounded-xl shadow-sm p-8 max-w-4xl mx-auto">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Auxiliar Administrativo</h1>
+                    <p class="text-lg text-gray-600">Mercado Coqueiral</p>
+                </div>
+                <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">CLT</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-sm">
+                <div class="flex items-center text-gray-600"><i data-feather="map-pin" class="w-5 h-5 mr-2"></i><span>Coqueiral, MG</span></div>
+                <div class="flex items-center text-gray-600"><i data-feather="dollar-sign" class="w-5 h-5 mr-2"></i><span>R$ 1.500 - R$ 1.800</span></div>
+                <div class="flex items-center text-gray-600"><i data-feather="clock" class="w-5 h-5 mr-2"></i><span>Publicado há 2 dias</span></div>
+            </div>
+
+            <div class="prose max-w-none mb-8">
+                <h3 class="font-semibold text-lg mb-2">Descrição da Vaga</h3>
+                <p>Estamos em busca de um Auxiliar Administrativo para atuar no setor financeiro e de atendimento ao cliente. Responsabilidades incluem lançamento de notas, controle de estoque e suporte ao cliente.</p>
+
+                <h3 class="font-semibold text-lg mt-6 mb-2">Requisitos</h3>
+                <ul class="list-disc pl-6 space-y-1">
+                    <li>Ensino Médio completo</li>
+                    <li>Conhecimento em Pacote Office</li>
+                    <li>Experiência com atendimento ao público</li>
+                    <li>Proatividade e organização</li>
+                </ul>
+            </div>
+
+            <div class="flex gap-4">
+                <a href="candidato.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700">Candidatar-se</a>
+                <button class="border border-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-50">Salvar Vaga</button>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>feather.replace();</script>
+</body>
+</html>
